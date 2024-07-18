@@ -10,8 +10,8 @@ def generate_qr_with_logo(data, logo_path, ssid):
     qr = qrcode.QRCode(
         version=1,
         error_correction=qrcode.constants.ERROR_CORRECT_H,
-        box_size=10,
-        border=4,
+        box_size=20,  # Increased box size for a larger QR code
+        border=2,     # Reduced border thickness
     )
     qr.add_data(data)
     qr.make(fit=True)
