@@ -24,7 +24,7 @@ def generate_qr_with_logo(data, logo_path, ssid):
         return None
 
     qr_width, qr_height = qr_img.size
-    larger_logo_size = (qr_width // 3) * 2 // 3  # Reduce the logo size to about 2/3rds
+    larger_logo_size = (qr_width // 3) * 2 // 3  # Reduce the logo size to about 3/4ths
     logo = logo.resize((larger_logo_size, larger_logo_size), Image.Resampling.LANCZOS)
 
     white_box_size = (larger_logo_size + 14, larger_logo_size + 14)  # Adjust white box size accordingly
