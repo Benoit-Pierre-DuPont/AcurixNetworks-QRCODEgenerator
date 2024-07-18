@@ -24,12 +24,12 @@ def generate_qr_with_logo(data, logo_path, ssid):
         return None
 
     qr_width, qr_height = qr_img.size
-    larger_logo_size = qr_width // 3  # Adjust size as needed
+    larger_logo_size = (qr_width // 3) * 2 // 3  # Reduce the logo size to about 2/3rds
     logo = logo.resize((larger_logo_size, larger_logo_size), Image.Resampling.LANCZOS)
 
-    white_box_size = (larger_logo_size + 20, larger_logo_size + 20)
+    white_box_size = (larger_logo_size + 14, larger_logo_size + 14)  # Adjust white box size accordingly
     white_box = Image.new("RGBA", white_box_size, "white")
-    white_box.paste(logo, (10, 10), logo.convert("RGBA"))
+    white_box.paste(logo, (7, 7), logo.convert("RGBA"))
 
     logo_position = ((qr_width - white_box_size[0]) // 2, (qr_height - white_box_size[1]) // 2)
     qr_img = qr_img.convert("RGBA")
