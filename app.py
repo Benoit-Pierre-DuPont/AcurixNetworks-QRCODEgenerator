@@ -9,9 +9,9 @@ app = Flask(__name__)
 def generate_qr_with_logo(data, logo_path, ssid):
     qr = qrcode.QRCode(
         version=1,
-        error_correction=qrcode.constants.ERROR_CORRECT_M,
-        box_size=20,  # Increased box size for a larger QR code
-        border=2,     # Reduced border thickness
+        error_correction=qrcode.constants.ERROR_CORRECT_H,  # Increased error correction level
+        box_size=10,  # Reduced box size
+        border=4,     # Increased border thickness
     )
     qr.add_data(data)
     qr.make(fit=True)
@@ -24,12 +24,12 @@ def generate_qr_with_logo(data, logo_path, ssid):
         return None
 
     qr_width, qr_height = qr_img.size
-    larger_logo_size = (qr_width // 3) * 2 // 3  # Reduce the logo size to about 3/4ths
-    logo = logo.resize((larger_logo_size, larger_logo_size), Image.Resampling.LANCZOS)
+    logo_size = qr_width // 6  # Further reduced logo size
+    logo = logo.resize((logo_size, logo_size), Image.Resampling.LANCZOS)
 
-    white_box_size = (larger_logo_size + 14, larger_logo_size + 14)  # Adjust white box size accordingly
+    white_box_size = (logo_size + 10, logo_size + 10)  # Adjusted white box size
     white_box = Image.new("RGBA", white_box_size, "white")
-    white_box.paste(logo, (7, 7), logo.convert("RGBA"))
+    white_box.paste(logo, (5, 5), logo.convert("RGBA"))
 
     logo_position = ((qr_width - white_box_size[0]) // 2, (qr_height - white_box_size[1]) // 2)
     qr_img = qr_img.convert("RGBA")
@@ -62,3 +62,4 @@ def index():
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port, debug=True)
+
